@@ -1,7 +1,9 @@
 # Xfce to Macos
 *Automate the customization of your Xfce Desktop to Look Like macOS Big Sur*
 #
+**Automated all steps shown in this video by LinuxScoop: https://youtu.be/uvvoJU69uNo**
 ## Prerequisite:
+* You're on Ubuntu
 *	**Install Dependencies**
 	```
 	sudo apt update
@@ -22,4 +24,9 @@
 
 * Enter password when prompted for `BECOME password`
 
-* Logout and login again after the execution finishes
+* Chill
+
+* Logout and login again after the playbook execution finishes
+
+## Result
+![demo.gif](https://raw.githubusercontent.com/shashi278/xfce-to-macos/main/result/demo.gif)
