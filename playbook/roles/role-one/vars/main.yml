@@ -1,0 +1,14 @@
+
+home_directory: "{{ lookup('env','HOME') }}"
+plank_dock_launcher_path: "{{ home_directory }}/.config/plank/dock1/launchers"
+autostart_path: "{{ home_directory }}/.config/autostart"
+lightdm_path: /etc/lightdm
+terminal_config_path: "{{ home_directory }}/.config/xfce4/terminal"
+
+# Add-ons
+
+enable_picom: true
+enable_ulauncher: true
+enable_conky: true
+enable_lightdm: false # because not working
+enable_comice_control: true

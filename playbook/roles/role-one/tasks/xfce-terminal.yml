@@ -1,0 +1,58 @@
+---
+
+- name: Terminal | Clone powerlevel10k repository
+  git:
+    repo: "{{ powerlevel10k_git }}"
+    dest: "{{ home_directory }}/powerlevel10k"
+    depth: 1
+
+- name: Terminal | Install zsh
+  become: yes
+  apt:
+    name: zsh
+    state: present
+
+- name: Terminal | Change shell to zsh
+  become: yes
+  shell:
+    cmd: "chsh -s $(which zsh)"
+
+- name: Terminal | Copy powerlevel10k configuration
+  copy:
+    src: p10k.zsh
+    dest: "{{ home_directory }}/.p10k.zsh"
+
+- name: Terminal | Copy zshrc configuration
+  copy:
+    src: zshrc
+    dest: "{{ home_directory }}/.zshrc"
+
+- name: Terminal | Get default profile
+  shell:
+    cmd: "gsettings get org.gnome.Terminal.ProfilesList default"
+  register: default_profile
+
+- name: Terminal | Dconf - use-custom-command
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout.strip(\"'\") }}/use-custom-command"
+    value: "true"
+
+- name: Terminal | Dconf - custom-command
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout.strip(\"'\") }}/custom-command"
+    value: "'zsh'"
+
+- name: Terminal | Dconf - use-theme-transparency
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout.strip(\"'\") }}/use-theme-transparency"
+    value: "false"
+
+- name: Terminal | Dconf - use-transparent-background
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout.strip(\"'\") }}/use-transparent-background"
+    value: "true"
+
+- name: Terminal | Dconf - background-transparency-percent
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout.strip(\"'\") }}/background-transparency-percent"
+    value: "5"

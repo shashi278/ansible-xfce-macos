@@ -1,0 +1,34 @@
+---
+
+- name: Customize Firefox | Check if Firefox is installed
+  command: "which firefox"
+  register: firefox_check
+  ignore_errors: yes
+
+- name: Customize Firefox | Run firefox - Make sure its initialised
+  shell:
+    cmd: "nohup firefox &"
+  when: firefox_check.rc == 0
+
+- name: Customize Firefox | Close firefox if it's running
+  shell:
+    cmd: "pkill firefox"
+  ignore_errors: true
+  when: firefox_check.rc == 0
+
+- name: Customize Firefox | Run Firefox Tweaks
+  become: yes
+  shell: "cd {{ home_directory }}/Downloads/WhiteSur-gtk-theme/ && ./tweaks.sh -f"
+  when: firefox_check.rc == 0
+
+- name: Customize Firefox | Get the name of default profile
+  shell:
+    cmd: "ls ~/.mozilla/firefox/ | grep 'default-release'"
+  register: firefox_profile
+  when: firefox_check.rc == 0
+
+- name: Customize Firefox | Place user.js in profile
+  copy:
+    src: user.js
+    dest: "{{ home_directory }}/.mozilla/firefox/{{ firefox_profile.stdout }}/user.js"
+  when: firefox_check.rc == 0

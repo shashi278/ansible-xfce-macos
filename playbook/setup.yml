@@ -1,0 +1,6 @@
+---
+
+- name: Apply role-one to all nodes
+  hosts: localhost
+  roles:
+    - role-one

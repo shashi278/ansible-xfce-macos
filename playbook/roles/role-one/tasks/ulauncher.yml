@@ -1,0 +1,35 @@
+---
+
+- name: Ulauncher | Add apt repository
+  become: yes
+  apt_repository:
+    repo: ppa:agornostal/ulauncher
+    state: present
+
+- name: Ulauncher | Update apt cache
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Ulauncher | Install Ulauncher
+  become: yes
+  apt:
+    name: ulauncher
+    state: latest
+
+- name: Ulauncher | Copy ulauncher theme
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/ulauncher theme/user-themes"
+    dest: "{{ home_directory }}/.config/ulauncher/"
+    remote_src: yes
+
+- name: Ulauncher | Copy settings
+  copy:
+    src: settings.json
+    dest: "{{ home_directory }}/.config/ulauncher/"
+
+- name: Ulauncher | Add in autostart
+  copy:
+    src: /usr/share/applications/ulauncher.desktop
+    dest: "{{ autostart_path }}/ulauncher.desktop"
+    remote_src: yes

@@ -1,0 +1,33 @@
+---
+
+- name: Global menu | Install dependencies
+  become: yes
+  apt:
+    name:
+      - vala-panel-appmenu-common
+      - bamfdaemon
+      - xfce4-appmenu-plugin
+      - unity-gtk-module-common
+      - unity-gtk2-module
+      - unity-gtk3-module
+
+- name: Global menu | Update settings | Modules
+  xfconf:
+    channel: xsettings
+    property: /Gtk/Modules
+    value_type: string
+    value: unity-gtk-module
+
+- name: Global menu | Update settings | ShellShowsMenubar
+  xfconf:
+    channel: xsettings
+    property: /Gtk/ShellShowsMenubar
+    value_type: bool
+    value: "true"
+
+- name: Global menu | Update settings | ShellShowsAppmenu
+  xfconf:
+    channel: xsettings
+    property: /Gtk/ShellShowsAppmenu
+    value_type: bool
+    value: "true"

@@ -1,0 +1,76 @@
+---
+
+- name: General Changes | Check if xfce session is running
+  shell:
+    cmd: "echo $DESKTOP_SESSION"
+  register: session_running
+
+- name: General Changes | Stop execution if xfce session is not running
+  fail:
+    msg: "xfce session is not running"
+  when: session_running.stdout and session_running.stdout != 'xfce'
+
+- name: General Changes | Hide icons
+  xfconf:
+    channel: "xfce4-desktop"
+    property: "/desktop-icons/style"
+    value_type: "int"
+    value: 0
+
+- name: General Changes | Update Window Manager - cycle_draw_frame
+  xfconf:
+    channel: xfwm4
+    property: /general/cycle_draw_frame
+    value_type: bool
+    value: "false"
+
+- name: General Changes | Update Window Manager - placement_mode
+  xfconf:
+    channel: xfwm4
+    property: /general/placement_mode
+    value_type: string
+    value: center
+
+- name: General Changes | Update Window Manager - show_dock_shadow
+  xfconf:
+    channel: xfwm4
+    property: /general/show_dock_shadow
+    value_type: bool
+    value: "false"
+
+- name: General Changes | Make sure ~/Downloads directory exists
+  file:
+    path: "{{ home_directory }}/Downloads"
+    state: directory
+
+- name: General Changes | Check if already downloaded
+  shell:
+    cmd: "ls {{ home_directory }}/Downloads/update-xfce-bigsur"
+  register: has_content
+  ignore_errors: yes
+
+- name: General Changes | Download and Unzip update-xfce-bigsur.zip
+  unarchive:
+    src: "{{ update_xfce_bigsur_file_url }}"
+    dest: "{{ home_directory }}/Downloads"
+    remote_src: yes
+  when: has_content.stdout_lines | length == 0
+
+- name: General Changes | Copy wallpapers to ~/Pictures
+  become: yes
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/wallpapers"
+    dest: "{{ home_directory }}/Pictures"
+    remote_src: yes
+
+- name: General Changes | Get propery name for setting wallpaper
+  shell:
+    cmd: "xfconf-query -c xfce4-desktop -l | grep 'last-image$'"
+  register: wallpaper_property
+
+- name: General Changes | Change wallpaper
+  xfconf:
+    channel: "xfce4-desktop"
+    property: "{{ wallpaper_property.stdout_lines[0] }}"
+    value_type: string
+    value: "{{ home_directory }}/Pictures/wallpapers/2560x1440.png"

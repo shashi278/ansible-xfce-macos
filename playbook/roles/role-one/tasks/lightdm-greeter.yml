@@ -1,0 +1,50 @@
+---
+
+- name: LightDM-Webkit2-Greeter | Install dependencies
+  become: yes
+  apt:
+    name:
+      - liblightdm-gobject-1-dev
+      - python3-gi
+      - python3-pip
+      - zip
+
+- name: LightDM-Webkit2-Greeter | Install whither
+  pip:
+    name: whither
+    state: latest
+
+- name: LightDM-Webkit2-Greeter | Clone web-greeter
+  git:
+    repo: "{{ web_greeter_git }}"
+    dest: /tmp/greeter
+
+- name: LightDM-Webkit2-Greeter | Install web-greeter
+  become: yes
+  shell:
+    cmd: "cd /tmp/greeter && make install"
+
+- name: LightDM-Webkit2-Greeter | Clone lightdm-webkit2-theme-glorious
+  become: yes
+  git:
+    repo: "{{ lightdm_webkit2_theme_glorious_git }}"
+    dest: /usr/share/lightdm-webkit/themes/glorious
+
+- name: LightDM-Webkit2-Greeter | Place lightdm.conf
+  become: yes
+  copy:
+    src: lightdm.conf
+    dest: "{{ lightdm_path }}/lightdm.conf"
+
+- name: LightDM-Webkit2-Greeter | Place web-greeter.yml
+  become: yes
+  copy:
+    src: web-greeter.yml
+    dest: "{{ lightdm_path }}/web-greeter.yml"
+
+- name: LightDM-Webkit2-Greeter | Copy wallpapers
+  become: yes
+  copy:
+    src: "{{ home_directory }}/Pictures/wallpapers"
+    dest: /usr/share/backgrounds/
+    remote_src: yes

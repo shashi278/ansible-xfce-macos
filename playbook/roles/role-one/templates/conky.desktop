@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec={{ home_directory }}/.conky/MX-CoreBlue/start_conky.sh
+Hidden=false
+NoDisplay=false
+Name=conky
+Comment=conky
+X-GNOME-Autostart-Delay=2
+X-GNOME-Autostart-enabled=true

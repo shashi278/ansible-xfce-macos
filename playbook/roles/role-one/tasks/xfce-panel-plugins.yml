@@ -1,0 +1,156 @@
+---
+
+- name: Xfce Panel | Add separator - plugin-26
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-26
+    value_type: string
+    value: separator
+
+- name: Xfce Panel | Modify separator - plugin-26
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-26/style
+    value_type: uint
+    value: 0
+
+- name: Xfce Panel | Add separator - plugin-27
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-27
+    value_type: string
+    value: separator
+
+- name: Xfce Panel | Modify separator - plugin-27
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-27/style
+    value_type: uint
+    value: 0
+
+- name: Xfce Panel | Modify separator - plugin-3
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-3/expand
+    value_type: bool
+    value: "false"
+
+- name: Xfce Panel | Add keyboard Layout - plugin-28
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-28
+    value_type: string
+    value: xkb
+
+- name: Xfce Panel | Modify keyboard - plugin-28 - display-type
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-28/display-type
+    value_type: uint
+    value: 1
+
+- name: Xfce Panel | Modify keyboard - plugin-28 - display-name
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-28/display-name
+    value_type: uint
+    value: 1
+
+- name: Xfce Panel | Modify keyboard - plugin-28 - display-scale
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-28/display-scale
+    value_type: uint
+    value: 50
+
+- name: Xfce Panel | Modify keyboard - plugin-28 - group-policy
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-28/group-policy
+    value_type: uint
+    value: 0
+
+- name: Xfce Panel | Modify keyboard - plugin-28 - display-tooltip-icon
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-28/display-tooltip-icon
+    value_type: bool
+    value: "true"
+
+- name: Xfce Panel | Add weather - plugin-29
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-29
+    value_type: string
+    value: weather
+
+- name: Xfce Panel | Add Appmenu - plugin-30
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-30
+    value_type: string
+    value: appmenu
+
+- name: Xfce Panel | Modify Appmenu - plugin-30 - use-bold-name
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-30/use-bold-name
+    value_type: bool
+    value: "true"
+
+- name: Xfce Panel | Modify applicationsmenu - plugin-1 - custom-menu
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-1/use-custom-menu
+    value_type: bool
+    value: "true"
+
+- name: Xfce Panel | Modify applicationsmenu - plugin-1 - custom-menu-file
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-1/custom-menu-file
+    value_type: string
+    value: "{{ home_directory }}/.config/menu/xpple.menu"
+
+- name: Xfce Panel | Modify applicationsmenu - plugin-1 - button-icon
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-1/button-icon
+    value_type: string
+    value: start-here
+
+- name: Xfce Panel | Modify applicationsmenu - plugin-1 - show-button-title
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-1/show-button-title
+    value_type: bool
+    value: "false"
+
+- name: Xfce Panel | Modify Actions Buttons - plugin-14 - appearance
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-14/appearance
+    value_type: uint
+    value: 0
+
+- name: Xfce Panel | Modify Actions Buttons - plugin-14 - style
+  xfconf:
+    channel: xfce4-panel
+    property: /plugins/plugin-14/items
+    value_type: string
+    value: ["-lock-screen", "-switch-user", "-separator", "-suspend", "-hibernate", "-hybrid-sleep", "-separator", "-shutdown", "-restart", "-separator", "+logout", "-logout-dialog"]
+
+- name: Xfce Panel | Rearrange Plugins
+  xfconf:
+    channel: xfce4-panel
+    property: /panels/panel-1/plugin-ids
+    value_type: int
+    value: [26,1,3,30,5,29,28,6,7,8,9,10,11,12,13,14,27]
+
+- name: Xfce Panel | Remove panel-2
+  xfconf:
+    channel: xfce4-panel
+    property: /panels
+    value_type: int
+    value: [1]
+    force_array: yes

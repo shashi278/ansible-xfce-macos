@@ -1,0 +1,13 @@
+---
+
+- name: Rofi Launcher | Install dependencies
+  become: yes
+  apt:
+    name:
+      - rofi
+
+- name: Rofi Launcher | Copy rofi config
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/rofi"
+    dest: "{{ home_directory }}/.config/"
+    remote_src: yes

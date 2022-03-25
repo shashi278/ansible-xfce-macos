@@ -1,0 +1,24 @@
+---
+
+- name: Conky | Install dependencies
+  become: yes
+  apt:
+    name:
+      - conky-all
+      - jq
+      - curl
+- name: Conky | Create ~/.conky directory
+  file:
+    path: "{{ home_directory }}/.conky"
+    state: directory
+
+- name: Conky | Copy conky config
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/conky/"
+    dest: "{{ home_directory }}/.conky"
+    remote_src: yes
+
+- name: Conky | Add conky to startup
+  template:
+    src: conky.desktop
+    dest: "{{ autostart_path }}/conky.desktop"

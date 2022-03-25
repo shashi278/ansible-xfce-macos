@@ -1,0 +1,46 @@
+---
+
+- name: Picom | Install dependencies
+  become: yes
+  apt:
+    name: "{{ picom_dependency }}"
+    state: present
+
+- name: Picom | Clone picom repository
+  git:
+    repo: "{{ picom_git }}"
+    dest: /tmp/picom
+    recursive: yes
+
+- name: Picom | Build and Install picom
+  become: yes
+  shell: "cd /tmp/picom && meson --buildtype=release . build && ninja -C build && sudo ninja -C build install"
+
+- name: Picom | Make sure picom directory exists
+  file:
+    path: "{{ home_directory }}/.config/picom"
+    state: directory
+
+- name: Picom | Copy picom config
+  copy:
+    src: picom.conf
+    dest: "{{ home_directory }}/.config/picom/"
+
+- name: Picom | Copy picom desktop file
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/picom/picom.desktop"
+    dest: "{{ home_directory }}/.config/picom/picom.desktop"
+    remote_src: yes
+
+- name: Picom | Add picom to startup
+  copy:
+    src: "{{ home_directory }}/.config/picom/picom.desktop"
+    dest: "{{ home_directory }}/.config/autostart/"
+    remote_src: yes
+
+- name: Picom | Disable compositing
+  xfconf:
+    channel: xfwm4
+    property: /general/use_compositing
+    value_type: bool
+    value: "false"

@@ -1,0 +1,48 @@
+---
+update_xfce_bigsur_file_url: "https://www.opencode.net/lsteam/xfce-big-sur-setup-file/-/raw/master/update-xfce-bigsur.zip"
+
+whitesur_gtk_theme_git: https://github.com/vinceliuice/WhiteSur-gtk-theme.git
+whitesur_icon_theme_git: https://github.com/vinceliuice/WhiteSur-icon-theme.git
+whitesur_cursors_git: https://github.com/vinceliuice/WhiteSur-cursors.git
+
+xpple_menu_url: https://github.com/shashi278/xfce-to-macos/raw/main/xpple_menu.zip
+
+web_greeter_git: https://github.com/Antergos/web-greeter.git
+
+lightdm_webkit2_theme_glorious_git: https://github.com/manilarome/lightdm-webkit2-theme-glorious.git
+
+picom_git: https://github.com/ibhagwan/picom.git
+
+powerlevel10k_git: https://github.com/romkatv/powerlevel10k.git
+
+comice_control_git: https://github.com/libredeb/comice-control-center.git
+
+picom_dependency:
+  - cmake
+  - meson
+  - ninja-build
+  - git
+  - pkg-config
+  - asciidoc
+  - libxext-dev
+  - libxcb1-dev
+  - libxcb-damage0-dev
+  - libxcb-xfixes0-dev
+  - libxcb-shape0-dev
+  - libxcb-render-util0-dev
+  - libxcb-render0-dev
+  - libxcb-randr0-dev
+  - libxcb-composite0-dev
+  - libxcb-image0-dev
+  - libxcb-present-dev
+  - libxcb-xinerama0-dev
+  - libxcb-glx0-dev
+  - libpixman-1-dev
+  - libdbus-1-dev
+  - libconfig-dev
+  - libgl1-mesa-dev
+  - libpcre2-dev
+  - libevdev-dev
+  - uthash-dev
+  - libev-dev
+  - libx11-xcb-dev

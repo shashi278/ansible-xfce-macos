@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=comice-control-center
+Comment=Comice control center
+Exec={{ home_directory }}/Downloads/comice-control-center/comice-control-center
+Icon={{ home_directory }}/Downloads/update-xfce-bigsur/icons/sideBar-controlCentre-white.svg
+Path={{ home_directory }}/Downloads/comice-control-center
+Terminal=false
+StartupNotify=false

@@ -1,0 +1,34 @@
+---
+
+- name: Xfce Pannel | Xpple Menu - Create directory to store xpple menu
+  file:
+    path: "{{ home_directory }}/Downloads/xpple_menu/"
+    state: directory
+
+- name: Xfce Pannel | Xpple Menu - Download and Unzip
+  unarchive:
+    src: "{{ xpple_menu_url }}"
+    dest: "{{ home_directory }}/Downloads/xpple_menu/"
+    remote_src: yes
+
+- name: Xfce Pannel | Xpple Menu - Ensure that applications directory exists
+  file:
+    path: "{{ home_directory }}/.local/share/applications/"
+    state: directory
+
+- name: Xfce Pannel | Xpple Menu - Copy applications
+  copy:
+    src: "{{ home_directory }}/Downloads/xpple_menu/applications/"
+    dest: "{{ home_directory }}/.local/share/applications/"
+    remote_src: yes
+
+- name: Xfce Pannel | Xpple Menu - Create ./config/menu/ directory
+  file:
+    path: "{{ home_directory }}/.config/menu/"
+    state: directory
+
+- name: Xfce Pannel | Xpple Menu - Copy xpple.menu
+  copy:
+    src: "{{ home_directory }}/Downloads/xpple_menu/xpple.menu"
+    dest: "{{ home_directory }}/.config/menu/"
+    remote_src: yes

@@ -1,0 +1,103 @@
+---
+
+- name: Theme-icons-cursor-fonts | install dependencies
+  become: yes
+  apt:
+    name:
+      - gtk2-engines-murrine
+      - sassc
+      - git
+    update_cache: yes
+
+- name: Theme-icons-cursor-fonts | clone WhiteSur-gtk-theme
+  become: yes
+  git:
+    repo: "{{ whitesur_gtk_theme_git }}"
+    dest: "{{ home_directory }}/Downloads/WhiteSur-gtk-theme"
+
+- name: Theme-icons-cursor-fonts | Install WhiteSur-gtk-theme
+  become: yes
+  shell:
+    cmd: "cd {{ home_directory }}/Downloads/WhiteSur-gtk-theme && ./install.sh -c dark -c light"
+
+- name: Theme-icons-cursor-fonts | clone WhiteSur-icon-theme
+  become: yes
+  git:
+    repo: "{{ whitesur_icon_theme_git }}"
+    dest: "{{ home_directory }}/Downloads/WhiteSur-icon-theme"
+
+- name: Theme-icons-cursor-fonts | Install WhiteSur-icon-theme
+  become: yes
+  shell:
+    cmd: "cd {{ home_directory }}/Downloads/WhiteSur-icon-theme && ./install.sh"
+
+- name: Theme-icons-cursor-fonts | clone WhiteSur-cursors
+  become: yes
+  git:
+    repo: "{{ whitesur_cursors_git }}"
+    dest: "{{ home_directory }}/Downloads/WhiteSur-cursors"
+
+- name: Theme-icons-cursor-fonts | Install WhiteSur-cursors
+  become: yes
+  shell:
+    cmd: "cd {{ home_directory }}/Downloads/WhiteSur-cursors && ./install.sh"
+
+- name: Theme-icons-cursor-fonts | Create ~/.fonts directory
+  file:
+    path: "{{ home_directory }}/.fonts"
+    state: directory
+
+- name: Theme-icons-cursor-fonts | copy fonts
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/fonts/"
+    dest: "{{ home_directory }}/.fonts"
+    remote_src: yes
+
+- name: Theme-icons-cursor-fonts | Update settings Theme
+  xfconf:
+    channel: xsettings
+    property: /Net/ThemeName
+    value_type: string
+    value: WhiteSur-dark
+
+- name: Theme-icons-cursor-fonts | Update settings Icon Theme
+  xfconf:
+    channel: xsettings
+    property: /Net/IconThemeName
+    value_type: string
+    value: WhiteSur-dark
+
+- name: Theme-icons-cursor-fonts | Update settings Font
+  xfconf:
+    channel: xsettings
+    property: /Gtk/FontName
+    value_type: string
+    value: "San Francisco Display 10"
+
+- name: Theme-icons-cursor-fonts | Update settings Monospace Font
+  xfconf:
+    channel: xsettings
+    property: /Gtk/MonospaceFontName
+    value_type: string
+    value: "Iosevka Term 10"
+
+- name: Theme-icons-cursor-fonts | Update general Theme
+  xfconf:
+    channel: xfwm4
+    property: /general/theme
+    value_type: string
+    value: WhiteSur-dark
+
+- name: Theme-icons-cursor-fonts | Update general Button Layout
+  xfconf:
+    channel: xfwm4
+    property: /general/button_layout
+    value_type: string
+    value: "CHM|"
+
+- name: Theme-icons-cursor-fonts | Update general Title Font
+  xfconf:
+    channel: xfwm4
+    property: /general/title_font
+    value_type: string
+    value: "San Francisco Display Medium 9"

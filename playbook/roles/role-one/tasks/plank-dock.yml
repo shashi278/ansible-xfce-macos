@@ -1,0 +1,100 @@
+---
+
+- name: Plank Dock | Install plank dock
+  become: yes
+  apt:
+    name:
+      - plank
+    state: latest
+
+- name: Plank Dock | Copy plank themes
+  copy:
+    src: "{{ home_directory }}/Downloads/WhiteSur-gtk-theme/src/other/plank/"
+    dest: "{{ home_directory }}/.local/share/plank/themes/"
+    remote_src: yes
+
+- name: Plank Dock | Copy launchpad icon
+  copy:
+    src: "{{ home_directory }}/Downloads/update-xfce-bigsur/icons/launchpad.svg"
+    dest: "{{ home_directory }}/.local/share/icons/"
+    remote_src: yes
+
+- name: Plank Dock | Dconf - Set zoom enabled
+  dconf:
+    key: /net/launchpad/plank/docks/dock1/zoom-enabled
+    value: "true"
+
+- name: Plank Dock | Dconf - Set zoom percent
+  dconf:
+    key: /net/launchpad/plank/docks/dock1/zoom-percent
+    value: 130
+
+- name: Plank Dock | Dconf - Set theme
+  dconf:
+    key: /net/launchpad/plank/docks/dock1/theme
+    value: "'theme-dark'"
+
+- name: Plank Dock | Place web-browser.desktop
+  copy:
+    src: web-browser.desktop
+    dest: "{{ home_directory }}/.local/share/applications/web-browser.desktop"
+
+- name: Plank Dock | Ensure that plank_dock_launcher_path exists
+  file:
+    path: "{{ plank_dock_launcher_path }}"
+    state: directory
+
+- name: Plank Dock | Remove all *.dockitem files
+  shell:
+    cmd: "rm -f {{ plank_dock_launcher_path }}/*.dockitem"
+
+- name: Plank Dock | Add launchpad.dockitem to dock
+  template:
+    src: launchpad.dockitem
+    dest: "{{ plank_dock_launcher_path }}/launchpad.dockitem"
+
+- name: Plank Dock | Add org.gnome.Nautilus.dockitem to dock
+  copy:
+    src: org.gnome.Nautilus.dockitem
+    dest: "{{ plank_dock_launcher_path }}/org.gnome.Nautilus.dockitem"
+
+- name: Plank Dock | Add firefox.dockitem to dock
+  template:
+    src: firefox.dockitem
+    dest: "{{ plank_dock_launcher_path }}/firefox.dockitem"
+
+- name: Plank Dock | Add org.gnome.gedit.dockitem to dock
+  copy:
+    src: org.gnome.gedit.dockitem
+    dest: "{{ plank_dock_launcher_path }}/org.gnome.gedit.dockitem"
+
+- name: Plank Dock | Add org.gnome.Terminal.dockitem to dock
+  copy:
+    src: org.gnome.Terminal.dockitem
+    dest: "{{ plank_dock_launcher_path }}/org.gnome.Terminal.dockitem"
+  ignore_errors: yes
+
+- name: Plank Dock | Add org.gnome.Calculator.dockitem to dock
+  copy:
+    src: org.gnome.Calculator.dockitem
+    dest: "{{ plank_dock_launcher_path }}/org.gnome.Calculator.dockitem"
+
+- name: Plank Dock | Add desktop.dockitem to dock
+  copy:
+    src: desktop.dockitem
+    dest: "{{ plank_dock_launcher_path }}/desktop.dockitem"
+
+- name: Plank Dock | Add trash.dockitem to dock
+  copy:
+    src: trash.dockitem
+    dest: "{{ plank_dock_launcher_path }}/trash.dockitem"
+
+- name: Plank Dock | Ensure autostart directory exists
+  file:
+    path: "{{ autostart_path }}"
+    state: directory
+
+- name: Plank Dock | Add plank to autostart
+  copy:
+    src: plank.desktop
+    dest: "{{ autostart_path }}/plank.desktop"

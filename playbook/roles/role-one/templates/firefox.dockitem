@@ -1,0 +1,2 @@
+[PlankDockItemPreferences]
+Launcher=file://{{ home_directory }}/.local/share/applications/web-browser.desktop
