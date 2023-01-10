@@ -28,5 +28,11 @@
 
 * Logout and login again after the playbook execution finishes
 
+* You can always go back to you Ubuntu by logging out from xfce.
+
 ## Result
 ![demo.gif](https://raw.githubusercontent.com/shashi278/xfce-to-macos/main/result/demo.gif)
+
+
+### Note:
+It's advisable to always verify the source code of an automation script before executing them on your machines.
