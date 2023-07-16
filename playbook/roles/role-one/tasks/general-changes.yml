@@ -44,8 +44,7 @@
     state: directory
 
 - name: General Changes | Check if already downloaded
-  shell:
-    cmd: "ls {{ home_directory }}/Downloads/update-xfce-bigsur"
+  command: "ls {{ home_directory }}/Downloads/update-xfce-bigsur"
   register: has_content
   ignore_errors: yes
 
